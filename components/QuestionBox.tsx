@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { LifelineType, Question } from "../types";
 
 interface QuestionBoxProps {
@@ -12,10 +13,8 @@ function QuestionBox({
   handleOptionClick,
   lifeline,
 }: QuestionBoxProps) {
- 
   const [highlight, setHighlight] = useState(null);
   const [chances, setChances] = useState(1);
-  console.log(chances);
 
   useEffect(() => {
     setHighlight(null);
@@ -37,7 +36,7 @@ function QuestionBox({
           });
           break;
         }
-        case LifelineType.TWO_CHANCES :{
+        case LifelineType.TWO_CHANCES: {
           setChances(2);
         }
       }
@@ -57,6 +56,9 @@ function QuestionBox({
         color: index == question.answer ? "bg-green-600" : "bg-red-600",
       });
     }
+    else{
+      toast.error('Wrong answer',{duration:1000,position:'top-center'});
+    }
 
     setChances(chances - 1);
   };
@@ -74,20 +76,19 @@ function QuestionBox({
           }
           return (
             <span
-              key={option}
+              key={index}
               onClick={() => {
                 if (option == "") {
                   return;
                 }
                 handleClick(index);
               }}
-              className={`lg:w-1/3 w-2/5 text-center min-h-[2rem] bg-indigo-200 px-3 py-1 cursor-pointer 
-              ${
+              className={`lg:w-1/3 w-2/5 text-center min-h-[2rem] px-3 py-1 cursor-pointer ${
                 hightlightOption
                   ? `${highlight.color} text-white`
                   : highlight || option == ""
                   ? "bg-gray-200"
-                  : "hover:bg-green-600 hover:text-white"
+                  : "hover:bg-green-600 bg-indigo-200 hover:text-white"
               }`}
             >
               {option}

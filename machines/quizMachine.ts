@@ -21,6 +21,7 @@ const quizMachine = createMachine(
           },
           WRONG_ANSWER: {
             target: "failed",
+            actions:["answeredWrong"]
           },
           USE_LIFELINE: {
             target: "active",

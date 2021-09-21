@@ -7,8 +7,6 @@ import useUser from '../hooks/useUser';
 
 function MyApp({ Component, pageProps }) {
 
-  const router = useRouter();
-
   const {isError,isLoading,user} = useUser();
 
   if(isLoading){
